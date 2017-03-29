@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        .container{
+            margin: 0 auto;
+            display: table;
+            position: relative;;
+        }
+        .box{
+            padding: 5px;
+            float: left;
+        }
+        .box-img{
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #ccc;
+            border-radius: 5px;
+        }
+        .box-img img{
+            width: 150px;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="box-img"><img src="images/0.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/1.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/2.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/3.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/4.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/5.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/6.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/7.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/8.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/9.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/10.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/11.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/12.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/13.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/14.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/15.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/16.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/17.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/18.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/19.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/18.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/19.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/18.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/19.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/18.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="box-img"><img src="images/19.jpg" alt=""></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload=function(){
+    water('container','box')
+
+    function water(container,box){
+        var aBox=document.getElementsByClassName('box');
+        var clientWidth=document.documentElement.clientWidth||document.body.clientWidth;
+        var num=Math.floor(clientWidth/aBox[0].offsetWidth);
+        var container=document.getElementsByClassName('container')[0];
+        container.style.width=num*aBox[0].offsetWidth+'px';
+        //找到高度最小的那个元素
+        var aBoxHeight=[];
+        for(var i=0;i<aBox.length;i++) {
+            var boxH = aBox[i].offsetHeight;
+            if (i < num) {
+                aBoxHeight[i] = boxH;  //第一行中的box的高度依次放入高度数组中
+            }else {
+                //第一行之外的box放入上一行高度最小的下边
+                //找到上一行高度最小的box
+                var minH=Math.min.apply(null,aBoxHeight);
+                //找到最小高度box的index
+                var minHIndex=aBoxHeight.indexOf(minH,0);
+                aBox[i].style.position="absolute";
+                aBox[i].style.top=minH+'px';
+                aBox[i].style.left = minHIndex*aBox[0].offsetWidth+'px';
+                //数组 最小高元素的高 + 添加上的aBox[i]块框高
+                aBoxHeight[minHIndex]=aBoxHeight[minHIndex]+aBox[i].offsetHeight;//更新添加了块框后的列高
+            }
+        }
+    }
+
+
+    //滚动加载
+    window.onscroll=function(){
+        var dataInt={'data':[{'src':'0.jpg'},{'src':'1.jpg'},{'src':'2.jpg'},{'src':'3.jpg'},{'src':'4.jpg'},{'src':'5.jpg'},{'src':'6.jpg'},{'src':'7.jpg'},]};
+        //一旦滚动的高度超过+屏幕距离，超过最低的那个图片的top值，则立刻记载新的图片
+        var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+        var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+        var aBox=document.getElementsByClassName('box');
+        aBox[aBox.length-1].style.background="red";
+        if(scrollTop+clientHeight>aBox[aBox.length-1].offsetTop+aBox[aBox.length-1].offsetHeight-10){
+            console.log('foo')
+            for(var i=0;i<dataInt.data.length;i++){
+                var str='<div class="box-img"><img src="./images/'+dataInt.data[i].src+'"></div>';
+                var oDiv=document.createElement('div');
+                oDiv.className="box";
+                oDiv.innerHTML=str;
+                document.getElementsByClassName('container')[0].appendChild(oDiv);
+                water('container','box');
+            }
+
+        }
+    }
+
+}
+</script>
+</html>
